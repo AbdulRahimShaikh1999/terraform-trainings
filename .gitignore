@@ -1,7 +1,7 @@
 # Ignore Terraform working directories in any subfolder
 **/.terraform/
 
-# Ignore state files anywhere
+# Ignore state files Anywhere
 **/*.tfstate
 **/*.tfstate.*
 
