@@ -34,3 +34,10 @@ data "aws_vpc" "consoleVPC" {
 output "non_default_vpc_id" {
   value = data.aws_vpc.consoleVPC.id
 }
+
+data "aws_availability_zones" "available" {}
+
+# Output the list of AZ names
+output "az_names" {
+  value = data.aws_availability_zones.available
+}
