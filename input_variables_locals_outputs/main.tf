@@ -92,3 +92,44 @@ resource "aws_instance" "instance_from_variables" {
     Name = "Terraform-EC2-instance"
   }
 }
+
+
+###
+
+variable "ec2_volume_config" {
+  description = "Configuration for the root EBS volume"
+  type = object({
+    volume_type = string
+    volume_size = number
+  })
+  default = {
+    volume_type = "gp2"
+    volume_size = 8
+  }
+}
+
+
+variable "additional_tags" {
+  description = "Additional tags to apply to the EC2 instance"
+  type        = map(string)
+  default     = {}
+}
+
+
+
+resource "aws_instance" "my_ec2_server" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.ec2_instance_type
+
+  root_block_device {
+    volume_type = var.ec2_volume_config.volume_type
+    volume_size = var.ec2_volume_config.volume_size
+  }
+
+  tags = merge(
+    {
+      Name = "Terraform-EC2-Validated"
+    },
+    var.additional_tags
+  )
+}
